@@ -12,13 +12,13 @@ public enum Location {
 	LOCATION9(9),
 	LOCATION10(10);
 	
-	private final int location;
+	private final Integer location;
 	
-	Location(int location) {
+	Location(Integer location) {
 		this.location = location;
 	}
 	
-	public int stationNumber() {
+	public Integer stationNumber() {
 		return location;
 	}
 }

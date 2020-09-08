@@ -1,120 +1,89 @@
 package com.geniusbrain.bookmycab.model;
 
-
-import com.geniusbrain.bookmycab.validation.ValidEmail;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-import java.util.List;
 import java.util.Objects;
 
-@Entity
-@Table(name = "users")
+@Entity(name = "users")
 public class User {
 
-	@Id
-	@NotBlank
-	@Column(name = "user_Id", nullable = false, unique = true)
-	String userId;
+    @Id
+    @NotBlank
+    @Column(name = "user_id")
+    private String userId;
 
-	@NotBlank
-	@Size(min = 6)
-	@Column(name = "password", nullable = false)
-	String password;
+    @NotBlank
+    @Column(name = "password")
+    private String password;
 
-	@NotBlank
-	@Column(name = "full_name", nullable = false)
-	String fullName;
+    @Column(name = "is_active")
+    private boolean isActive;
 
-	@NotBlank
-	@Size(min = 10)
-	@Column(name = "phone_no", nullable = false, unique = true)
-	String phoneNo;
+    @Column(name = "roles")
+    private String roles;
 
-	@NotBlank
-	@ValidEmail
-	@Column(name = "mail_id", nullable = false, unique = true)
-	String mailId;
+//    @OneToOne(targetEntity = UserDetails.class, mappedBy = "userId")
+//    private UserDetails userDetails;
 
-	@Column(name = "wallet_money", nullable = false, unique = true)
-	double walletMoney;
+    public String getUserId() {
+        return userId;
+    }
 
-	//@OneToMany
-	//List<Trip> bookings;
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
-	public User() {
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public User(String userId, String password, String fullName, String phoneNo, String mailId, double walletMoney) {
-		this.userId = userId;
-		this.password = password;
-		this.fullName = fullName;
-		this.phoneNo = phoneNo;
-		this.mailId = mailId;
-		this.walletMoney = walletMoney;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public String getUserId() {
-		return userId;
-	}
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-	public String getFullName() {
-		return fullName;
-	}
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	public String getMailId() {
-		return mailId;
-	}
-	public void setMailId(String mailId) {
-		this.mailId = mailId;
-	}
-	public String getPhoneNo() {
-		return phoneNo;
-	}
-	public void setPhoneNo(String phoneNo) {
-		this.phoneNo = phoneNo;
-	}
-	public double getWalletMoney() {
-		return walletMoney;
-	}
-	public void setWalletMoney(double walletMoney) {
-		this.walletMoney = walletMoney;
-	}
+    public boolean isActive() {
+        return isActive;
+    }
 
-	@Override
-	public String toString() {
-		return "User{" +
-				"userId='" + userId + '\'' +
-				", password='" + password + '\'' +
-				", fullName='" + fullName + '\'' +
-				", phoneNo='" + phoneNo + '\'' +
-				", mailId='" + mailId + '\'' +
-				", walletMoney=" + walletMoney +
-				'}';
-	}
+    public void setActive(boolean active) {
+        isActive = active;
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		User user = (User) o;
-		return Objects.equals(phoneNo, user.phoneNo) &&
-				Objects.equals(mailId, user.mailId);
-	}
+    public String getRoles() {
+        return roles;
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(phoneNo, mailId);
-	}
+    public void setRoles(String roles) {
+        this.roles = roles;
+    }
+
+//    public UserDetails getUserDetails() {
+//        return userDetails;
+//    }
+//
+//    public void setUserDetails(UserDetails userDetails) {
+//        this.userDetails = userDetails;
+//    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                ", userId='" + userId + '\'' +
+                ", isActive=" + isActive +
+                ", roles='" + roles + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return userId.equals(user.userId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId);
+    }
 }

@@ -1,7 +1,7 @@
 package com.geniusbrain.bookmycab.Dao;
 
-import com.geniusbrain.bookmycab.model.User;
-import com.geniusbrain.bookmycab.repository.UserRepository;
+import com.geniusbrain.bookmycab.model.UserDetails;
+import com.geniusbrain.bookmycab.repository.UserDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -10,38 +10,37 @@ import org.springframework.stereotype.Repository;
 public class UserDaoImpl implements UserDao {
 
 	@Autowired
-	private UserRepository userRepository;
+	private UserDetailsRepository userDetailsRepository;
 
 	@Override
 	public boolean isValidUser(String userId) {
-		return userRepository.existsById(userId);
+		return userDetailsRepository.existsById(userId);
 	}
 
 	@Override
-	public User getUser(String userId) {
-		return userRepository.findById(userId).get();
-	}
-	
-	@Override
-	public User addUser(User user) {
-		return userRepository.save(user);
+	public UserDetails getUser(String userId) {
+		return userDetailsRepository.findById(userId).get();
 	}
 	
 	@Override
-	public User updateUser(String userId, User user) {
-		User user1 = userRepository.findById(userId).get();
+	public UserDetails addUser(UserDetails userDetails) {
+		return userDetailsRepository.save(userDetails);
+	}
+	
+	@Override
+	public UserDetails updateUser(String userId, UserDetails userDetails) {
+		UserDetails userDetails1 = userDetailsRepository.findById(userId).get();
 
-		user1.setPassword(user.getPassword());
-		user1.setFullName(user.getFullName());
-		user1.setPhoneNo(user.getPhoneNo());
-		user1.setMailId(user.getMailId());
+		userDetails1.setFullName(userDetails.getFullName());
+		userDetails1.setPhoneNo(userDetails.getPhoneNo());
+		userDetails1.setMailId(userDetails.getMailId());
 
-		return userRepository.save(user1);
+		return userDetailsRepository.save(userDetails1);
 	}
 	
 	@Override
 	public void deleteUser(String userId){
-		User user = userRepository.findById(userId).get();
-		userRepository.delete(user);
+		UserDetails userDetails = userDetailsRepository.findById(userId).get();
+		userDetailsRepository.delete(userDetails);
 	}
 }

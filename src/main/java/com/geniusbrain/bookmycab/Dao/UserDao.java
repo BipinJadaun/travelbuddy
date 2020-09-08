@@ -1,18 +1,16 @@
 package com.geniusbrain.bookmycab.Dao;
 
-import com.geniusbrain.bookmycab.exception.ResourceAlreadyExistException;
-import com.geniusbrain.bookmycab.exception.ResourceNotFoundException;
-import com.geniusbrain.bookmycab.model.User;
+import com.geniusbrain.bookmycab.model.UserDetails;
 
 public interface UserDao {
 
     boolean isValidUser(String userId);
 
-    User getUser(String userId);
+    UserDetails getUser(String userId);
 
-    User addUser(User user);
+    UserDetails addUser(UserDetails userDetails);
 
-    User updateUser(String userId, User user);
+    UserDetails updateUser(String userId, UserDetails userDetails);
 
     void deleteUser(String userId);
 }

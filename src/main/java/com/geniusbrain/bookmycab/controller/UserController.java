@@ -2,7 +2,7 @@ package com.geniusbrain.bookmycab.controller;
 
 import com.geniusbrain.bookmycab.exception.ResourceAlreadyExistException;
 import com.geniusbrain.bookmycab.exception.ResourceNotFoundException;
-import com.geniusbrain.bookmycab.model.User;
+import com.geniusbrain.bookmycab.model.UserDetails;
 import com.geniusbrain.bookmycab.service.UserService;
 import com.geniusbrain.bookmycab.service.ValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,21 +17,16 @@ public class UserController {
 	@Autowired
 	private ValidationService validationService;
 
-	@GetMapping("/login")
-	public void userLogin(@RequestParam ("userName") String userName, @RequestParam("password") String password) {
-		
-	}
-
 	@PostMapping("/register")
-	public User userRegistration(@RequestBody User user) throws ResourceAlreadyExistException {
-		validationService.validateNewUser(user.getUserId());
-		return userService.addUser(user);
+	public UserDetails userRegistration(@RequestBody UserDetails userDetails) throws ResourceAlreadyExistException {
+		validationService.validateNewUser(userDetails.getUserId());
+		return userService.addUser(userDetails);
 	}
 
 	@PutMapping("/updateProfile")
-	public void updateUserProfile(@RequestParam("userId") String userId, @RequestBody User user) throws ResourceNotFoundException {
+	public void updateUserProfile(@RequestParam("userId") String userId, @RequestBody UserDetails userDetails) throws ResourceNotFoundException {
 		validationService.validateUser(userId);
-		userService.updateUser(userId, user);
+		userService.updateUser(userId, userDetails);
 	}
 
 	@DeleteMapping("/deleteProfile")
@@ -41,7 +36,7 @@ public class UserController {
 	}
 
 	@GetMapping("/getUser")
-	public User getUser(@RequestParam("userId") String userId) throws ResourceNotFoundException {
+	public UserDetails getUser(@RequestParam("userId") String userId) throws ResourceNotFoundException {
 		validationService.validateUser(userId);
 		return userService.getUser(userId);
 	}

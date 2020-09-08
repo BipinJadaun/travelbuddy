@@ -1,7 +1,7 @@
 package com.geniusbrain.bookmycab.service;
 
 import com.geniusbrain.bookmycab.Dao.UserDao;
-import com.geniusbrain.bookmycab.model.User;
+import com.geniusbrain.bookmycab.model.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,18 +13,18 @@ public class UserServiceImpl implements UserService {
 	private UserDao userDao;
 	
 	@Override
-	public User getUser(String userId){
+	public UserDetails getUser(String userId){
 		return userDao.getUser(userId);
 	}
 	
 	@Override
-	public User addUser(User user) {
-		return userDao.addUser(user);
+	public UserDetails addUser(UserDetails userDetails) {
+		return userDao.addUser(userDetails);
 	}
 	
 	@Override
-	public User updateUser(String userId, User user) {
-		return userDao.updateUser(userId, user);
+	public UserDetails updateUser(String userId, UserDetails userDetails) {
+		return userDao.updateUser(userId, userDetails);
 	}
 	
 	@Override
@@ -34,16 +34,16 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public double getWalletMoney(String userId) {
-		User user = getUser(userId);
-		return user.getWalletMoney();
+		UserDetails userDetails = getUser(userId);
+		return userDetails.getWalletMoney();
 	}
 
 	@Override
 	public double addWalletMoney(String userId, double amount) {
-		User user = getUser(userId);
-		double totalAmount = user.getWalletMoney() + amount;
-		user.setWalletMoney(totalAmount);
-		userDao.updateUser(userId, user);
+		UserDetails userDetails = getUser(userId);
+		double totalAmount = userDetails.getWalletMoney() + amount;
+		userDetails.setWalletMoney(totalAmount);
+		userDao.updateUser(userId, userDetails);
 		return totalAmount;
 	}
 

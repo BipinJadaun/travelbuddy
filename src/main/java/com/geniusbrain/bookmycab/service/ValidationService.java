@@ -20,7 +20,7 @@ public class ValidationService {
 
     public void validateNewUser(String userId) throws ResourceAlreadyExistException {
         if(userDao.isValidUser(userId)){
-            throw new ResourceAlreadyExistException("User already exist: "+ userId);
+            throw new ResourceAlreadyExistException("UserDetails already exist: "+ userId);
         }
     }
 

@@ -5,6 +5,7 @@ import java.util.Objects;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "trips")
@@ -12,25 +13,25 @@ public class Trip {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "trip_id", nullable = false, unique = true)
+	@Column(name = "trip_id")
 	long tripId;
 
 	@NotBlank
-	@Column(name = "user_id", nullable = false)
+	@Column(name = "user_id")
 	String userId;
 
-	@Column(name = "start_time", nullable = false)
+	@Column(name = "start_time")
 	LocalDateTime startTime;
 
 	@Column(name = "end_time")
 	LocalDateTime endTime;
 
-	@NotBlank
-	@Column(name = "pickup_location", nullable = false)
+	@NotNull
+	@Column(name = "pickup_location")
 	Location pickupLocation;
 
-	@NotBlank
-	@Column(name = "drop_location", nullable = false)
+	@NotNull
+	@Column(name = "drop_location")
 	Location dropLocation;
 
 	@Column(name = "fare")

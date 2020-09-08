@@ -7,8 +7,7 @@ import com.geniusbrain.bookmycab.Dao.BookingsDao;
 import com.geniusbrain.bookmycab.Dao.UserDao;
 import com.geniusbrain.bookmycab.model.Offer;
 import com.geniusbrain.bookmycab.model.Trip;
-import com.geniusbrain.bookmycab.model.User;
-import com.geniusbrain.bookmycab.presenter.ReportPresenter;
+import com.geniusbrain.bookmycab.model.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +24,8 @@ public class BookingServiceImpl implements BookingService {
 
 	@Override
 	public void startTrip(String userId, Trip trip) {
-		User user = userDao.getUser(userId);
-		if (user.getWalletMoney() < 5) {
+		UserDetails userDetails = userDao.getUser(userId);
+		if (userDetails.getWalletMoney() < 5) {
 			System.out.println("insufficient wallet balance for a trip, Please pay cash");
 		}
 		trip.setStartTime(LocalDateTime.now());
@@ -35,7 +34,7 @@ public class BookingServiceImpl implements BookingService {
 
 	@Override
 	public void completeCurrentTrip(String userId) {
-		User user = userDao.getUser(userId);
+		UserDetails userDetails = userDao.getUser(userId);
 		Trip currTrip = getCurrentTrip(userId);
 		if (currTrip != null) {
 			Offer fareType = serviceHelper.getFareType(currTrip.getStartTime());
@@ -46,10 +45,10 @@ public class BookingServiceImpl implements BookingService {
 			currTrip.setOffer(fareType);
 			currTrip.setFare(fare);
 
-			if(user.getWalletMoney() < fare) {
+			if(userDetails.getWalletMoney() < fare) {
 				System.out.println("insufficient Wallet balance, Pls pay cash");
 			}else {
-				user.setWalletMoney(user.getWalletMoney() - fare);
+				userDetails.setWalletMoney(userDetails.getWalletMoney() - fare);
 			}
 			bookingDao.completeCurrentTrip(currTrip);
 		}
