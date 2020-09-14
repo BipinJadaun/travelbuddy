@@ -14,21 +14,21 @@ public class UserDetails {
 
 	@Id
 	@NotBlank
-	@Column(name = "user_Id")
+	@Column(name = "user_Id", nullable = false, unique = true)
 	String userId;
 
 	@NotBlank
-	@Column(name = "full_name")
+	@Column(name = "full_name", nullable = false)
 	String fullName;
 
 	@NotBlank
 	@Size(min = 10)
-	@Column(name = "phone_no")
+	@Column(name = "phone_no", nullable = false, unique = true)
 	String phoneNo;
 
 	@NotBlank
 	@ValidEmail
-	@Column(name = "mail_id")
+	@Column(name = "mail_id", nullable = false, unique = true)
 	String mailId;
 
 	@Column(name = "wallet_money")

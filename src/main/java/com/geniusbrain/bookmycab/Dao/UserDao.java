@@ -1,5 +1,6 @@
 package com.geniusbrain.bookmycab.Dao;
 
+import com.geniusbrain.bookmycab.model.AppUser;
 import com.geniusbrain.bookmycab.model.UserDetails;
 
 public interface UserDao {
@@ -8,7 +9,7 @@ public interface UserDao {
 
     UserDetails getUser(String userId);
 
-    UserDetails addUser(UserDetails userDetails);
+    AppUser addUser(AppUser userDetails);
 
     UserDetails updateUser(String userId, UserDetails userDetails);
 

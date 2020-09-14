@@ -5,25 +5,35 @@ import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 
 @Entity(name = "users")
-public class User {
+public class AppUser {
 
     @Id
     @NotBlank
-    @Column(name = "user_id")
+    @Column(name = "user_id", unique = true, nullable = false)
     private String userId;
 
     @NotBlank
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "is_active")
+    @Column(name = "is_active", nullable = false)
     private boolean isActive;
 
-    @Column(name = "roles")
+    @Column(name = "roles", nullable = false)
     private String roles;
 
-//    @OneToOne(targetEntity = UserDetails.class, mappedBy = "userId")
-//    private UserDetails userDetails;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "userId")
+    private UserDetails userDetails;
+
+    public AppUser() {
+    }
+
+    public AppUser(String userId , String password, String roles) {
+        this.userId = userId;
+        this.password = password;
+        this.roles = roles;
+    }
 
     public String getUserId() {
         return userId;
@@ -57,17 +67,17 @@ public class User {
         this.roles = roles;
     }
 
-//    public UserDetails getUserDetails() {
-//        return userDetails;
-//    }
-//
-//    public void setUserDetails(UserDetails userDetails) {
-//        this.userDetails = userDetails;
-//    }
+    public UserDetails getUserDetails() {
+        return userDetails;
+    }
+
+    public void setUserDetails(UserDetails userDetails) {
+        this.userDetails = userDetails;
+    }
 
     @Override
     public String toString() {
-        return "User{" +
+        return "AppUser{" +
                 ", userId='" + userId + '\'' +
                 ", isActive=" + isActive +
                 ", roles='" + roles + '\'' +
@@ -78,8 +88,8 @@ public class User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return userId.equals(user.userId);
+        AppUser appUser = (AppUser) o;
+        return userId.equals(appUser.userId);
     }
 
     @Override

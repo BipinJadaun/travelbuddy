@@ -1,11 +1,10 @@
 package com.geniusbrain.bookmycab.controller;
 
-import com.geniusbrain.bookmycab.exception.ResourceNotFoundException;
 import com.geniusbrain.bookmycab.model.Trip;
 import com.geniusbrain.bookmycab.service.BookingService;
-import com.geniusbrain.bookmycab.service.ValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,42 +16,41 @@ public class BookingController {
 	
 	@Autowired
 	private BookingService service;
-	@Autowired
-	private ValidationService validationService;
 
 	@PostMapping("/startTrip")
-	public void startTrip(@RequestParam("userId") String userId, @RequestBody Trip trip) throws ResourceNotFoundException {
-		validationService.validateUser(userId);
+	@PreAuthorize("hasRole('USER')") //@PreAuthorize supports Spring expression language(SpEL) for more complex authorizations.
+	//@Secured("ROLE_USER")  //@Secured is for simple authorizations
+	public void startTrip(@RequestParam("userId") String userId, @RequestBody Trip trip){
 		service.startTrip(userId, trip);
 	}
 
 	@PutMapping("/endTrip")
-	public void endCurrentTrip(@RequestParam("userId") String userId) throws ResourceNotFoundException  {
-		validationService.validateUser(userId);
+	@PreAuthorize("hasRole('USER')")
+	public void endCurrentTrip(@RequestParam("userId") String userId) {
 		service.completeCurrentTrip(userId);
 	}
 
 	@DeleteMapping("/cancelTrip")
-	public void cancelCurrentTrip(@RequestParam("userId") String userId) throws ResourceNotFoundException {
-		validationService.validateUser(userId);
+	@PreAuthorize("hasRole('USER')")
+	public void cancelCurrentTrip(@RequestParam("userId") String userId) {
 		service.cancelCurrentTrip(userId);
 	}
 
 	@PutMapping("/updateTrip")
-	public void updateCurrentTrip(@RequestParam("userId") String userId, @RequestBody Trip trip) throws ResourceNotFoundException  {
-		validationService.validateUser(userId);
+	@PreAuthorize("hasRole('USER')")
+	public void updateCurrentTrip(@RequestParam("userId") String userId, @RequestBody Trip trip) {
 		service.updateCurrentTrip(userId, trip);
 	}
 
 	@GetMapping("/getCurrentTrip")
-	public Trip getCurrentTrip(@RequestParam("userId") String userId) throws ResourceNotFoundException {
-		validationService.validateUser(userId);
+	@PreAuthorize("hasRole('USER')")
+	public Trip getCurrentTrip(@RequestParam("userId") String userId) {
 		return service.getCurrentTrip(userId);
 	}
 
 	@GetMapping("/getBookingHistory")
-	public List<Trip> getBookingHistory(@RequestParam("userId") String userId) throws ResourceNotFoundException {
-		validationService.validateUser(userId);
+	@PreAuthorize("hasRole('USER')")
+	public List<Trip> getBookingHistory(@RequestParam("userId") String userId) {
 		return service.getBookingHistory(userId);
 	}
 }

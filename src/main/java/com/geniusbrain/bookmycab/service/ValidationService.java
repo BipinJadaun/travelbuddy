@@ -12,12 +12,6 @@ public class ValidationService {
     @Autowired
     private UserDao userDao;
 
-    public void validateUser(String userId) throws ResourceNotFoundException{
-        if(!userDao.isValidUser(userId)){
-            throw new ResourceNotFoundException("Invalid user: "+ userId);
-        }
-    }
-
     public void validateNewUser(String userId) throws ResourceAlreadyExistException {
         if(userDao.isValidUser(userId)){
             throw new ResourceAlreadyExistException("UserDetails already exist: "+ userId);

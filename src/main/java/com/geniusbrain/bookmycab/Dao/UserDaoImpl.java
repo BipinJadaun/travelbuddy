@@ -1,7 +1,9 @@
 package com.geniusbrain.bookmycab.Dao;
 
+import com.geniusbrain.bookmycab.model.AppUser;
 import com.geniusbrain.bookmycab.model.UserDetails;
 import com.geniusbrain.bookmycab.repository.UserDetailsRepository;
+import com.geniusbrain.bookmycab.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -11,6 +13,8 @@ public class UserDaoImpl implements UserDao {
 
 	@Autowired
 	private UserDetailsRepository userDetailsRepository;
+	@Autowired
+	private UserRepository userRepository;
 
 	@Override
 	public boolean isValidUser(String userId) {
@@ -23,8 +27,8 @@ public class UserDaoImpl implements UserDao {
 	}
 	
 	@Override
-	public UserDetails addUser(UserDetails userDetails) {
-		return userDetailsRepository.save(userDetails);
+	public AppUser addUser(AppUser userDetails) {
+		return userRepository.save(userDetails);
 	}
 	
 	@Override

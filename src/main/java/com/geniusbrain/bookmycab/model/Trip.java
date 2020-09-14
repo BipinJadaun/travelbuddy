@@ -13,21 +13,21 @@ public class Trip {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "trip_id")
+	@Column(name = "trip_id", nullable = false, unique = true)
 	long tripId;
 
 	@NotBlank
-	@Column(name = "user_id")
+	@Column(name = "user_id", nullable = false)
 	String userId;
 
-	@Column(name = "start_time")
+	@Column(name = "start_time", nullable = false)
 	LocalDateTime startTime;
 
 	@Column(name = "end_time")
 	LocalDateTime endTime;
 
 	@NotNull
-	@Column(name = "pickup_location")
+	@Column(name = "pickup_location", nullable = false)
 	Location pickupLocation;
 
 	@NotNull
@@ -43,7 +43,7 @@ public class Trip {
 	@Column(name = "offer")
 	Offer offer;
 
-	@Column(name = "trip_completed")
+	@Column(name = "trip_completed", nullable = false)
 	boolean tripCompleted;
 
 	public Trip() {
