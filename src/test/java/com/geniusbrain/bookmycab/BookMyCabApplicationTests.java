@@ -4,7 +4,6 @@ import com.geniusbrain.bookmycab.controller.BookingController;
 import com.geniusbrain.bookmycab.controller.HomeController;
 import com.geniusbrain.bookmycab.controller.UserController;
 import com.geniusbrain.bookmycab.exception.ResourceAlreadyExistException;
-import com.geniusbrain.bookmycab.exception.ResourceNotFoundException;
 import com.geniusbrain.bookmycab.model.AppUser;
 import com.geniusbrain.bookmycab.model.Location;
 import com.geniusbrain.bookmycab.model.Trip;
@@ -12,8 +11,10 @@ import com.geniusbrain.bookmycab.model.UserDetails;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.hateoas.EntityModel;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @SpringBootTest
 class BookMyCabApplicationTests {
@@ -27,7 +28,9 @@ class BookMyCabApplicationTests {
 
 	@Test
 	public void testAddUser() {
-		UserDetails userDetails = new UserDetails("vinujadaun", "vipin jadaun", "8892748648", "vinujadaun@gmail.com", 100);
+		UserDetails userDetails = new UserDetails("vinujadaun",
+				"vipin jadaun", "8892748648",
+				"vinujadaun@gmail.com",new Date(), 100);
 		AppUser user = new AppUser("vinujadaun", "vinujadaun", "ROLE_USER");
 		user.setUserDetails(userDetails);
 		try {
@@ -39,7 +42,7 @@ class BookMyCabApplicationTests {
 
 	@Test
 	public void getUser(){
-			UserDetails userDetails = userController.getUser("vinujadaun");
+		EntityModel<UserDetails> vinujadaun = userController.getUser("vinujadaun");
 	}
 
 	@Test

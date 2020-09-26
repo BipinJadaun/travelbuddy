@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/home")
@@ -57,7 +60,7 @@ public class HomeController {
     }
 
     @PostMapping("/register")
-    public AppUser userRegistration(@RequestBody AppUser user) throws ResourceAlreadyExistException {
+    public AppUser userRegistration(@Valid @RequestBody AppUser user) throws ResourceAlreadyExistException {
         validationService.validateNewUser(user.getUserId());
         return userService.addUser(user);
     }

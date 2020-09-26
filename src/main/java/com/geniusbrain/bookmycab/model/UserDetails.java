@@ -5,7 +5,9 @@ import com.geniusbrain.bookmycab.validation.ValidEmail;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -31,20 +33,22 @@ public class UserDetails {
 	@Column(name = "mail_id", nullable = false, unique = true)
 	String mailId;
 
+	@Past
+	@Column(name = "birth_Date", nullable = false)
+	private Date birthDate;
+
 	@Column(name = "wallet_money")
 	double walletMoney;
-
-//@OneToMany
-	//List<Trip> bookings;
 
 	public UserDetails() {
 	}
 
-	public UserDetails(String userId, String fullName, String phoneNo, String mailId, double walletMoney) {
+	public UserDetails(String userId, String fullName, String phoneNo, String mailId, Date birthDate, double walletMoney) {
 		this.userId = userId;
 		this.fullName = fullName;
 		this.phoneNo = phoneNo;
 		this.mailId = mailId;
+		this.birthDate = birthDate;
 		this.walletMoney = walletMoney;
 	}
 
@@ -72,6 +76,15 @@ public class UserDetails {
 	public void setPhoneNo(String phoneNo) {
 		this.phoneNo = phoneNo;
 	}
+
+	public Date getBirthDate() {
+		return birthDate;
+	}
+
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
+	}
+
 	public double getWalletMoney() {
 		return walletMoney;
 	}
@@ -86,6 +99,7 @@ public class UserDetails {
 				", fullName='" + fullName + '\'' +
 				", phoneNo='" + phoneNo + '\'' +
 				", mailId='" + mailId + '\'' +
+				", birthDate='" + birthDate + '\'' +
 				", walletMoney=" + walletMoney +
 				'}';
 	}

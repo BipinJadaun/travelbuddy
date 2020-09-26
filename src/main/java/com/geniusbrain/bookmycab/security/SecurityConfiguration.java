@@ -1,6 +1,7 @@
 package com.geniusbrain.bookmycab.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.sql.DataSource;
+import java.util.Set;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
@@ -26,6 +28,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsService userDetailsService;
+
+    @Value("#{'${bookmycab.app.allowed-resources}'.split(',')}")
+    private String[] allowedResources;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -38,12 +43,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().headers().frameOptions().disable()//to enable H2-console view
                 .and().authorizeRequests()
-                //.antMatchers("/admin").hasRole("ADMIN") // we gonna use this by MethodSecurity in the controller
                // .antMatchers("/users").hasAnyRole("ADMIN", "USER") // we gonna use this by MethodSecurity in the controller
-                .antMatchers("/home/**").permitAll()
-                .antMatchers("/h2-console/**").permitAll()
-                .anyRequest().authenticated();
-               // .and().formLogin();
+                .antMatchers(allowedResources).permitAll()
+                .anyRequest().authenticated()
+                .and().formLogin();
 
         http.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
     }

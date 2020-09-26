@@ -27,8 +27,9 @@ public class UserDaoImpl implements UserDao {
 	}
 	
 	@Override
-	public AppUser addUser(AppUser userDetails) {
-		return userRepository.save(userDetails);
+	public AppUser addUser(AppUser user) {
+		user.setActive(true);
+		return userRepository.save(user);
 	}
 	
 	@Override

@@ -1,7 +1,10 @@
 package com.geniusbrain.bookmycab.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 import java.util.Objects;
 
 @Entity(name = "users")
@@ -13,6 +16,7 @@ public class AppUser {
     private String userId;
 
     @NotBlank
+    @JsonIgnore //to ignore returning password in the responses
     @Column(name = "password", nullable = false)
     private String password;
 
@@ -23,8 +27,12 @@ public class AppUser {
     private String roles;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_Id")
     private UserDetails userDetails;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_Id")
+    private List<Trip> trips;
 
     public AppUser() {
     }
@@ -73,6 +81,14 @@ public class AppUser {
 
     public void setUserDetails(UserDetails userDetails) {
         this.userDetails = userDetails;
+    }
+
+    public List<Trip> getTrips() {
+        return trips;
+    }
+
+    public void setTrips(List<Trip> trips) {
+        this.trips = trips;
     }
 
     @Override

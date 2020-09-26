@@ -6,7 +6,7 @@ import com.geniusbrain.bookmycab.model.UserDetails;
 public interface UserService {
     UserDetails getUser(String userId);
 
-    AppUser addUser(AppUser userDetails);
+    AppUser addUser(AppUser user);
 
     UserDetails updateUser(String userId, UserDetails userDetails);
 
